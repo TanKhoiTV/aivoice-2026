@@ -36,12 +36,33 @@ git submodule update --init
 
 ## Local Development Setup
 
-The submodule uses a relative URL (`../aivoice-2026-prototype.git`) pointing
-to a local bare repo. Git's file transport is restricted by default; enable it:
+Both repos are **private** — ask a maintainer to add you as a collaborator
+before proceeding.
+
+Clone the project with submodules using the SSH URL:
 
 ```bash
-git config protocol.file.allow always
+git clone --recurse-submodules git@github.com:TanKhoiTV/aivoice-2026.git
 ```
 
-When a GitHub remote is created later, update `.gitmodules` to use the
-public URL and `git submodule sync` to propagate.
+If already cloned, initialize the submodule separately:
+
+```bash
+git submodule update --init
+```
+
+The submodule URL (`git@github.com:TanKhoiTV/kavi-prototype.git`) is already
+configured in `.gitmodules`. No local bare repo or `protocol.file.allow` is
+needed.
+
+Set up the development environment:
+
+```bash
+uv sync
+```
+
+Verify everything is working:
+
+```bash
+make check
+```
