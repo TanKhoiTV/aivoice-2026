@@ -152,3 +152,74 @@ Worker → Planner → Advisor → Researcher → User
 Each level escalates up only if the current level cannot unblock. The Planner
 adjusts the plan; the Advisor resolves direction/architecture questions; the
 Researcher fills knowledge gaps.
+
+---
+
+## Collaborator Incoming Workflow
+
+Both contributors work across both repos (`aivoice-2026` and `kavi-prototype`);
+this section covers how to handle **incoming Issues and PRs** created by a
+collaborator, regardless of which repo they land in.
+
+### Incoming Issue Assessment
+
+A collaborator creates an Issue using the Task Creation template (Description +
+DoD + Proposed Implementation). Our side handles the assessment:
+
+```
+Worker ──→ reads Issue, assesses scope, feasibility, conflicts
+   │
+Reviewer ──→ reviews assessment for blind spots
+   │
+User ──→ approves response or directs next action
+```
+
+- **Worker** reads the Issue, evaluates scope and potential conflicts, considers
+  how it fits the current architecture, and posts a summary comment with
+  findings.
+- **Reviewer** reviews the assessment for blind spots.
+- **User** approves the response or gives a different direction.
+
+This uses the **Simplified workflow** — no new Issue or branch needed on our
+side.
+
+### Incoming PR Review & Merge
+
+A collaborator pushes a branch and opens a PR. Our side handles review, merge,
+and post-merge cleanup:
+
+```
+Worker ──→ reviews PR code, fetches the branch locally, runs checks
+   │         (lint, format, tests), posts review comments on the PR
+   │
+Reviewer ──→ reviews Worker's review for missed issues
+   │
+User ──→ merges the PR
+   │
+Worker ──→ bumps submodule pointer (if PR was in kavi-prototype):
+   │         cd prototype && git fetch origin main && git checkout main
+   │         cd .. && git add prototype
+   │         git commit -m "chore(prototype): bump for <feature>"
+   │         git push
+   │
+Worker ──→ verifies remote branch was deleted (GitHub does not always auto-
+   │         delete; if it persists, delete manually via GitHub UI or CLI)
+Reviewer ──→ verifies submodule pointer update and branch cleanup
+```
+
+**Pre-commit checks** run locally on the fetched branch — Worker is
+responsible for running the same lint/format/tests as in the main workflow.
+
+**Submodule pointer bump** applies only when the PR targets `kavi-prototype`
+and changes its `main` history. If the PR is in `aivoice-2026`, no pointer
+update is needed.
+
+**Branch cleanup** — GitHub may or may not auto-delete the remote branch after
+merge. Always verify. If it persists, delete it manually via GitHub UI or CLI:
+
+```bash
+git push origin -d <branch-name>
+```
+
+This uses the **Simplified workflow** — the work is mechanical review and
+cleanup, not architectural.
