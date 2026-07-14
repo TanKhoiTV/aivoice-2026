@@ -7,3 +7,7 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# Pi agent / workspace config (local only — keep repo lean)
+.pad.toml
+.pi/

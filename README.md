@@ -33,4 +33,3 @@ git submodule update --init
 | ------ | ------------ |
 | `prototype/` | The actual project (code + docs) — a git submodule |
 | `.gitmodules` | Submodule definition |
-| `.pad.toml` | Workspace config |
