@@ -6,9 +6,10 @@ offline, on-device speech-to-speech translator for Vietnamese ↔ English.
 
 ## This repo is just a shell
 
-All code and documentation live in the **`prototype/` submodule**
-([`kavi-prototype`](https://github.com/TanKhoiTV/kavi-prototype)). This parent
-repo exists only to tie the project together and host this top-level README.
+This parent repo is **public**; the real implementation (code + documentation)
+lives in the **private** `prototype/` submodule
+([`kavi-prototype`](https://github.com/TanKhoiTV/kavi-prototype)). This repo exists
+only to host this top-level README and link into the project.
 
 ➡️ **Start here:** [`prototype/README.md`](prototype/README.md)
 
