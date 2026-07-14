@@ -19,6 +19,7 @@ Public project documentation (contest rules, registration, pitch) lives in
 [`docs/`](docs/):
 
 - [OneVoice AI Challenge — Contest Information](docs/contest-info.md)
+- [Technical Specifications & Grading](docs/specifications.md)
 
 ## Cloning
 
@@ -39,6 +40,6 @@ git submodule update --init
 
 | Path | What it is |
 | ------ | ------------ |
-| `docs/` | Public-facing project documentation (contest, registration) |
+| `docs/` | Public-facing project documentation (contest, specs) |
 | `prototype/` | The actual implementation (code + internal docs) — a git submodule |
 | `.gitmodules` | Submodule definition |
