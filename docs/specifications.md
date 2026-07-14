@@ -48,7 +48,7 @@ These are the **six objective metrics** taken from the Luma scoring criteria. Ea
 
 **Why both?** BLEU can be inflated by short, safe outputs; COMET keeps us honest about meaning. Judges score the pair together, so we track both.
 
-> **Target:** maximize. We will record our BLEU/COMET against a public proxy (e.g. the Opus-MT baseline) and watch it as we tune.
+> **Target:** maximize. We will record our BLEU/COMET against a public proxy (e.g. a public MT baseline) and watch it as we tune.
 
 ### 3.2 Naturalness — MOS (Mean Opinion Score)
 
