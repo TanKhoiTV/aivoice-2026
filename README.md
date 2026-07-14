@@ -6,12 +6,19 @@ offline, on-device speech-to-speech translator for Vietnamese ↔ English.
 
 ## This repo is just a shell
 
-This parent repo is **public**; the real implementation (code + documentation)
-lives in the **private** `prototype/` submodule
-([`kavi-prototype`](https://github.com/TanKhoiTV/kavi-prototype)). This repo exists
-only to host this top-level README and link into the project.
+This parent repo is **public**; the real implementation (code + internal
+documentation) lives in the **private** `prototype/` submodule
+([`kavi-prototype`](https://github.com/TanKhoiTV/kavi-prototype)). This repo hosts
+the project's public-facing documentation and links into the private codebase.
 
 ➡️ **Start here:** [`prototype/README.md`](prototype/README.md)
+
+## Documentation
+
+Public project documentation (contest rules, registration, pitch) lives in
+[`docs/`](docs/):
+
+- [OneVoice AI Challenge — Contest Information](docs/contest-info.md)
 
 ## Cloning
 
@@ -32,5 +39,6 @@ git submodule update --init
 
 | Path | What it is |
 | ------ | ------------ |
-| `prototype/` | The actual project (code + docs) — a git submodule |
+| `docs/` | Public-facing project documentation (contest, registration) |
+| `prototype/` | The actual implementation (code + internal docs) — a git submodule |
 | `.gitmodules` | Submodule definition |
