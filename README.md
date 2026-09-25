@@ -6,16 +6,18 @@ offline, on-device speech-to-speech translator for Vietnamese ↔ English.
 
 ## This repo is just a shell
 
-This parent repo is **public**; the real implementation (code + internal
-documentation) lives in the **private** `prototype/` submodule
-([`kavi-prototype`](https://github.com/TanKhoiTV/kavi-prototype)). This repo hosts
-the project's public-facing documentation and links into the private codebase.
+This parent repo hosts the project's public-facing documentation. The real
+implementation (code + internal documentation) lives in the `prototype/`
+submodule ([`kavi-prototype`](https://github.com/TanKhoiTV/kavi-prototype)).
+
+> The Android application lives in a separate private repository and is not
+> publicly available.
 
 ➡️ **Start here:** [`prototype/README.md`](prototype/README.md)
 
 ## Documentation
 
-Public project documentation (contest rules, registration, pitch) lives in
+Public project documentation (contest rules, specifications) lives in
 [`docs/`](docs/):
 
 - [OneVoice AI Challenge — Contest Information](docs/contest-info.md)
