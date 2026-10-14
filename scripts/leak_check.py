@@ -181,16 +181,15 @@ def gitlink_findings(
 def submodule_entries(text: str) -> list[tuple[str, str]]:
     """Return ``(section header, path)`` for every section in ``.gitmodules``.
 
-    The path falls back to the section name when no ``path`` key is present, so a
-    malformed entry is still matched against the allow-list by something.
+    Sections without a ``path`` key are skipped -- a gitlink in the index is what
+    makes a submodule, and that is checked separately.
     """
     entries: list[tuple[str, str]] = []
     header = ""
-    name = ""
     for line in text.splitlines():
         stripped = line.strip()
         if stripped.startswith(SUBMODULE_SECTION):
-            header = name = stripped
+            header = stripped
             continue
         if not header or not stripped.lower().startswith("path"):
             continue
