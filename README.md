@@ -23,6 +23,30 @@ Public project documentation (contest rules, specifications) lives in
 - [OneVoice AI Challenge — Contest Information](docs/contest-info.md)
 - [Technical Specifications & Grading](docs/specifications.md)
 
+## Repository checks
+
+CI runs three checks on every push and pull request
+([`.github/workflows/docs.yml`](.github/workflows/docs.yml)). They are
+stdlib-only, so the same commands work locally with no setup:
+
+```bash
+python3 scripts/leak_check.py --allow-gitlink prototype   # public boundary
+python3 scripts/link_check.py                             # relative links resolve
+python3 -m unittest discover -s tests                     # unit tests for both
+```
+
+- **Public boundary** (`scripts/leak_check.py`) — the on-device Android track is
+  private, so private-track artifacts must not be tracked in either public repo:
+  native QNN libraries, Gradle/Android files, app sources, model weights,
+  keystores, and machine-local config. `--allow-gitlink prototype` is the one
+  permitted exception, because this repo tracks the *public* benchmark as a
+  submodule; any other gitlink is a finding.
+- **Markdown links** (`scripts/link_check.py`) — moving documentation between the
+  three repositories is exactly when relative links break and nothing notices.
+  Links into the `prototype/` submodule are skipped (CI does not check it out)
+  and external URLs are counted but never fetched, so the check stays offline and
+  deterministic.
+
 ## Cloning
 
 ```bash
