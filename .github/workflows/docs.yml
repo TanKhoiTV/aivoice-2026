@@ -1,0 +1,29 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Least privilege: every check here only reads the repository.
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # Nothing here pushes, so keep the token out of .git/config where a
+          # later step could pick it up.
+          persist-credentials: false
+      # No setup-python and no dependencies: the checks are stdlib-only, so the
+      # runner's system python3 is enough.
+      - name: Public boundary (no private-track artifacts)
+        run: python3 scripts/leak_check.py --allow-gitlink prototype
+      - name: Markdown links resolve
+        run: python3 scripts/link_check.py
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -v
