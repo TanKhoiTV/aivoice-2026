@@ -1,0 +1,26 @@
+# Line-ending normalization.
+#
+# Git for Windows checks text out as CRLF by default (core.autocrlf=true), and
+# without these rules a commit made on Windows stores CRLF in the object. The
+# rules below keep the repository LF-only whatever the contributor's setting.
+* text=auto
+
+# Must be LF everywhere: shell scripts break on a stray CR, and Python reads
+# `\r\n` into string literals.
+*.sh          text eol=lf
+*.py          text eol=lf
+*.md          text eol=lf
+*.yml         text eol=lf
+*.yaml        text eol=lf
+*.toml        text eol=lf
+*.json        text eol=lf
+Makefile      text eol=lf
+.gitattributes text eol=lf
+.gitignore    text eol=lf
+.gitmodules   text eol=lf
+
+# Binary assets must never be rewritten.
+*.png         binary
+*.jpg         binary
+*.pdf         binary
+*.docx        binary
