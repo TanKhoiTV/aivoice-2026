@@ -43,6 +43,14 @@ REFERENCE_LINK = re.compile(r"^\s{0,3}\[[^\]]+\]:\s*(\S+)")
 SCHEME = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.\-]*:")
 FENCE = re.compile(r"^\s*(```|~~~)")
 
+#: Trees that are frozen snapshots of a previous repository, not living docs.
+#: ``archive/`` was moved here verbatim for history: its links were written for a
+#: tree that no longer exists anywhere (the registration checklist and the pitch
+#: deck were removed from both repos by design), so "every link resolves" is not
+#: a property this repository can hold for it. ``archive/`` is excluded from ruff
+#: and pre-commit for the same reason — it is not edited.
+FROZEN_PREFIXES = ("archive/",)
+
 #: Outcome kinds for a single link target.
 EXTERNAL = "external"
 ANCHOR = "anchor"
@@ -157,9 +165,17 @@ def _git(repo_root: Path, *args: str) -> str:
 
 
 def tracked_markdown(repo_root: Path) -> list[str]:
-    """Return the tracked ``*.md`` files, POSIX-spelled and sorted."""
+    """Return the tracked ``*.md`` files, POSIX-spelled and sorted.
+
+    Frozen reference trees (``FROZEN_PREFIXES``) are skipped: they are history,
+    not documentation this repository maintains.
+    """
     entries = _git(repo_root, "ls-files", "-z").split("\0")
-    return sorted(entry for entry in entries if entry.lower().endswith(".md"))
+    return sorted(
+        entry
+        for entry in entries
+        if entry.lower().endswith(".md") and not entry.startswith(FROZEN_PREFIXES)
+    )
 
 
 def check(repo_root: Path) -> tuple[list[str], list[Link], list[Finding], dict[str, int]]:

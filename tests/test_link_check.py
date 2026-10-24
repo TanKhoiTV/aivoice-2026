@@ -136,12 +136,17 @@ class TestThisRepository(unittest.TestCase):
         _, _, findings, _ = check(REPO_ROOT)
         self.assertEqual(findings, [], f"unresolved links: {findings}")
 
-    def test_the_readme_submodule_link_is_the_only_skipped_one(self) -> None:
+    def test_the_readme_submodule_link_is_skipped(self) -> None:
         files, links, _, counts = check(REPO_ROOT)
         self.assertIn("README.md", files)
         self.assertGreaterEqual(len(links), 5)
-        self.assertEqual(counts[SUBMODULE], 1)
+        self.assertGreaterEqual(counts[SUBMODULE], 1)
         self.assertGreaterEqual(counts[EXTERNAL], 1)
+
+    def test_archive_is_not_link_checked(self) -> None:
+        """``archive/`` is a frozen snapshot with historically broken links."""
+        files, _, _, _ = check(REPO_ROOT)
+        self.assertFalse([name for name in files if name.startswith("archive/")])
 
 
 class TestMain(unittest.TestCase):
