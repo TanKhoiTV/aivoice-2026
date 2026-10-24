@@ -23,6 +23,8 @@ jobs:
       # runner's system python3 is enough.
       - name: Public boundary (no private-track artifacts)
         run: python3 scripts/leak_check.py --allow-gitlink prototype
+      - name: Markdown shape (blank lines, unwrapped paragraphs, LF)
+        run: python3 scripts/check_docs.py
       - name: Markdown links resolve
         run: python3 scripts/link_check.py
       - name: Unit tests
