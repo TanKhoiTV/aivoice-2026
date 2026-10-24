@@ -10,7 +10,7 @@
 
 You are in the **public program repo** (`aivoice-2026`). It holds the story, the
 contest material and this guide. The **host-side benchmark** lives in the
-`prototype/` submodule (`kavi-prototype`, also public); the **on-device app** and
+`prototype/` submodule (`kavi-benchmark`, also public); the **on-device app** and
 most of its ADR register live in the private `kavi-android` repo. Read in this
 order — each step builds the mental model you need for the next.
 
@@ -26,7 +26,7 @@ aivoice-2026/                 (PUBLIC program layer — what we tell the world)
 │  └─ reference/
 │     └─ additional-reading.md  ⑫  the self-study syllabus
 ├─ archive/                   —  the previous implementation, reference only
-└─ prototype/                 (submodule: kavi-prototype, PUBLIC benchmark)
+└─ prototype/                 (submodule: kavi-benchmark, PUBLIC benchmark)
    ├─ README.md               ④  harness + how to run
    ├─ CONTRIBUTING.md         ⑤  cloning + tooling
    ├─ docs/benchmark/         —  the published v1 results + report
@@ -216,7 +216,7 @@ under `archive/` for reference.
 | `docs/` | Public program docs — contest brief, specification, this guide, the quiz, the reading list. |
 | `docs/decisions/` | The public licensing records (`ADR-029`, `ADR-030`, `ADR-031`). |
 | `archive/` | The old implementation (old `pipeline.py`, `architecture.md`, `design.md`, legacy ADRs, experiments). **Reference only — do not edit.** |
-| `prototype/` | Git submodule: `kavi-prototype`, the public host-side benchmark — harness, eval sets, `docs/benchmark/` results and the Typst report. |
+| `prototype/` | Git submodule: `kavi-benchmark`, the public host-side benchmark — harness, eval sets, `docs/benchmark/` results and the Typst report. |
 | `scripts/`, `tests/` | The public-boundary and Markdown-link checks, plus their unit tests. |
 | `.github/` | CI for those checks, and `CODEOWNERS`. |
 
