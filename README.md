@@ -8,7 +8,7 @@ offline, on-device speech-to-speech translator for Vietnamese ↔ English.
 
 This parent repo hosts the project's public-facing documentation. The real
 implementation (code + internal documentation) lives in the `prototype/`
-submodule ([`kavi-prototype`](https://github.com/TanKhoiTV/kavi-prototype)).
+submodule ([`kavi-benchmark`](https://github.com/TanKhoiTV/kavi-benchmark)).
 
 > The Android application lives in a separate private repository and is not
 > publicly available.

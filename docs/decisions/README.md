@@ -32,7 +32,7 @@ ADR-030/031 resolve two of the forks it left open.
   title and repository, never by path: `ADR-020 — pipeline concurrency
   (kavi-android)`.
 - **ADR-032 — MT model choice** — public, in `prototype/docs/decisions/`, written
-  after the configuration split. Tracked by TanKhoiTV/kavi-prototype#110. It
+  after the configuration split. Tracked by TanKhoiTV/kavi-benchmark#110. It
   references the on-device records by title + repo, never by number, because the
   private register renumbers independently.
 - **`archive/docs/adr/`** — two legacy records from the previous implementation,
