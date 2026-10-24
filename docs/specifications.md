@@ -1,8 +1,6 @@
 # Kavi — Technical Specifications & Grading
 
-> **Audience:** new Kavi team members with no speech / ML background.
-> **Companion doc:** [Contest Information](contest-info.md) §4 (Evaluation & Benchmarks).
-> **Purpose:** translate the contest's grading rules into the concrete targets Kavi must hit, and define every acronym in plain language.
+> **Audience:** new Kavi team members with no speech / ML background. **Companion doc:** [Contest Information](contest-info.md) §4 (Evaluation & Benchmarks). **Purpose:** translate the contest's grading rules into the concrete targets Kavi must hit, and define every acronym in plain language.
 
 ---
 
@@ -31,7 +29,7 @@ Within the 50% Technical Excellence weight, judges look at four things (from the
 - **Low-latency communication** — the wall-clock delay a user feels.
 - **Stability and operational performance** — does it run reliably end-to-end.
 
-The first three map directly onto the six objective metrics in §3. "Stability" is a judge judgement, not a published number — we cover it by building a robust pipeline (see the architecture work, deferred for now).
+The first three map directly onto the six objective metrics in §3. "Stability" is a judge judgement, not a published number — we cover it by building a well-tested pipeline (see the architecture work, deferred for now).
 
 ---
 
@@ -97,7 +95,7 @@ This 2.0 s budget has to cover the whole pipeline — **ASR** (speech→text) + 
 
 ### 3.6 (judge view) Stability & Operational Performance
 
-Not a published metric, but part of the Technical Excellence score: does the device run the full pipeline reliably, end-to-end, without crashing or drifting? We earn this by a robust, well-tested pipeline.
+Not a published metric, but part of the Technical Excellence score: does the device run the full pipeline reliably, end-to-end, without crashing or drifting? We earn this by testing the pipeline end to end, not by claiming robustness.
 
 ---
 

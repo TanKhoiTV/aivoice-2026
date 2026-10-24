@@ -67,13 +67,13 @@
 - [faster-whisper](https://github.com/SYSTRAN/faster-whisper) — CTranslate2-based CPU optimisation of the same architecture. By contrast, Kavi's decoder runs through ONNX Runtime's Java API — a design choice that avoids hand-rolling per-step native code (the argument for ADR-007's Path B over Paths A/C).
 - **In our codebase:** the Python candidate in the `prototype/` submodule (`bench/candidates/whisper_asr.py`) and the Android side in the private `kavi-android` repo (`app/src/main/java/com/kavi/app/inference/decoder/WhisperDecoder.kt`).
 
-**You're done when:** You can explain why the encoder runs once and the decoder runs N times (where N = utterance length in tokens), and what "KV cache" means in terms of tensors flowing through the decoder loop.
+**You're done when:** You can explain why the encoder runs once and the decoder runs N times (where N = utterance length in tokens), and what "KV cache" means for the tensors flowing through the decoder loop.
 
 ---
 
 ## 4. Neural Machine Translation (Opus-MT)
 
-**Why this matters:** Opus-MT vi↔en is the MT engine — smaller and simpler than Whisper, but architecturally very similar (encoder-decoder transformer). Understanding it reinforces the same encoder/decoder/KV-cache patterns, and the licence difference (Apache-2.0 vs Whisper's MIT) matters for deployment.
+**Why this matters:** Opus-MT vi↔en is the MT engine — smaller and simpler than Whisper, but architecturally similar (encoder-decoder transformer). Understanding it reinforces the same encoder/decoder/KV-cache patterns, and the licence difference (Apache-2.0 vs Whisper's MIT) matters for deployment.
 
 **Key concepts**
 

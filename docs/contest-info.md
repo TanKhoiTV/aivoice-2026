@@ -1,8 +1,6 @@
 # OneVoice AI Challenge — Contest Information
 
-> **Last reviewed:** 2026-07-14
-> **Sources:** contest website (saigonaihub.com/OneVoiceAIChallenge), Luma registration page (luma.com/g1rwi7ag), JS bundle extraction, Vietnamese press coverage (doanhnghiepvn.vn, May 25 2026), Google Sheets registration template
-> **Scope:** authoritative contest facts for the Kavi team
+> **Last reviewed:** 2026-07-14 **Sources:** contest website (saigonaihub.com/OneVoiceAIChallenge), Luma registration page (luma.com/g1rwi7ag), JS bundle extraction, Vietnamese press coverage (doanhnghiepvn.vn, May 25 2026), Google Sheets registration template **Scope:** authoritative contest facts for the Kavi team
 
 ---
 
@@ -67,7 +65,7 @@ Enable natural bilingual conversations with minimal latency, even in **noisy, ha
 ### Technical Requirements
 
 - Solutions may be deployed on **any portable device format**, without restriction to predefined device categories.
-- Specific benchmark values are published **prior to the prototype submission phase** (see §4).
+- Specific benchmark values are published **before the prototype submission phase** (see §4).
 - The final round features **live demonstrations and winner announcement**, where shortlisted teams present their working prototypes to a panel of judges.
 
 ---
@@ -205,7 +203,7 @@ Registration is a **two-step** process:
 ### Keynote Quotes
 
 > **Ông Lê Hồng Minh** (Founder & Chairman, VNG): *"Most AI systems today are designed for near-ideal conditions — stable connectivity, strong compute infrastructure, controlled environments. But reality is different. OneVoice AI Challenge starts with a simple question: If AI is truly useful, can it work well in such environments? If we solve that, AI can create value in many more real-world contexts."*
-
+>
 > **Ông ST Liew** (VP & President, Qualcomm SEA/ANZ): *"AI can only reach its full potential when it becomes accessible and operates reliably in daily life. On-device AI processing enables real-time responses, enhances data security, and reduces dependence on network connectivity. These factors are especially important for many application contexts in Southeast Asia."*
 
 ---
