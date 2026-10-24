@@ -14,9 +14,9 @@ Project lead
 
 ## Context
 
-[ADR-003](ADR-003-hexagon-runtime.md) selects QAIRT/QNN accessed through the
+ADR-003 (hexagon runtime — private in `kavi-android`) selects QAIRT/QNN accessed through the
 ONNX Runtime QNN Execution Provider as the NPU path, and
-[ADR-019](ADR-019-qnn-runtime-bundling.md) requires the `libQnn*.so` runtime to be
+ADR-019 (QNN runtime bundling — private in `kavi-android`) requires the `libQnn*.so` runtime to be
 **bundled in the APK** — because the target device's preinstalled runtime is not
 in `/vendor/etc/public.libraries.txt` or `/system/etc/public.libraries.txt`, so a
 third-party app cannot `dlopen` it directly (linker-namespace/SELinux).
@@ -104,11 +104,11 @@ rule. Tracking issue: #46.
 
 ### Positive
 
-- Unblocks the NPU path ([ADR-003](ADR-003-hexagon-runtime.md)) and the APK
-  runtime bundling in [ADR-019](ADR-019-qnn-runtime-bundling.md) without vendor
+- Unblocks the NPU path (ADR-003 (hexagon runtime — private in `kavi-android`)) and the APK
+  runtime bundling in ADR-019 (QNN runtime bundling — private in `kavi-android`) without vendor
   negotiation.
 - Removes the largest open legal risk from the platform decision
-  ([ADR-002](ADR-002-target-platform.md)).
+  (ADR-002 (target platform — private in `kavi-android`)).
 
 ### Negative / risk
 
@@ -120,6 +120,6 @@ rule. Tracking issue: #46.
 ## References
 
 - [ADR-029](ADR-029-license-gate.md) — Shipping license gate (parent record)
-- [ADR-003](ADR-003-hexagon-runtime.md) — Hexagon runtime / compiler strategy
-- [ADR-019](ADR-019-qnn-runtime-bundling.md) — QNN runtime bundling (what this permits)
-- [ADR-002](ADR-002-target-platform.md) — Target platform
+- ADR-003 (hexagon runtime — private in `kavi-android`) — Hexagon runtime / compiler strategy
+- ADR-019 (QNN runtime bundling — private in `kavi-android`) — QNN runtime bundling (what this permits)
+- ADR-002 (target platform — private in `kavi-android`) — Target platform

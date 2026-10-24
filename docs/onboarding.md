@@ -1,91 +1,104 @@
-# Onboarding to Kavi (kavi-prototype)
+# Onboarding to Kavi (aivoice-2026)
 
-> A guide for new team members. It decodes the acronyms, the three foundational
-> decisions (ADR-001 / 002 / 003), and how the repository is laid out — so you
-> can read the rest of the docs without a translator. Pair this with
-> `README.md` (the quickstart) and `CONTRIBUTING.md` (how we work).
+> A guide for new team members. It decodes the acronyms, the program's three
+> foundational decisions (ADR-001 / 002 / 003), and where each part of the
+> project now lives — so you can read the rest of the docs without a translator.
+> Pair this with `README.md` (the landing page) and `docs/specifications.md`
+> (our targets).
 
 ## Start here — reading order (from zero to productive)
 
-You probably arrived at the **public parent repo** (`aivoice-2026`). That repo
-only holds the *story and public docs*; the **real code and internal docs live
-in the submodule** (`kavi-prototype`, under `prototype/`). Read in this
+You are in the **public program repo** (`aivoice-2026`). It holds the story, the
+contest material and this guide. The **host-side benchmark** lives in the
+`prototype/` submodule (`kavi-prototype`, also public); the **on-device app** and
+most of its ADR register live in the private `kavi-android` repo. Read in this
 order — each step builds the mental model you need for the next.
 
 ```text
-aivoice-2026/                 (PUBLIC parent — what we tell the world)
+aivoice-2026/                 (PUBLIC program layer — what we tell the world)
 ├─ README.md                  ①  landing page
-└─ docs/
-   ├─ contest-info.md         ②  the contest + how we're graded
-   └─ specifications.md       ③  our concrete targets + glossary
-kavi-prototype/               (submodule — the real repo; also public)
-├─ README.md                  ④  pipeline + layout + how to run
-├─ CONTRIBUTING.md            ⑤  cloning + tooling
-└─ docs/
-   ├─ onboarding.md           ⑥  this file — architecture, decoded
-   ├─ android-implementation-plan.md  ⑪  the active plan (ADR-007 · ADR-013–022 · ADR-008/009)
-   ├─ reference/              ⑫  superseded / deprecated docs (benchmarking-plan, phase-4-qnn-plan, …)
-   └─ decisions/
-      ├─ README.md            ⑩  the ADR index — one decision per record (start here)
-      ├─ ADR-001 …            ⑦  100% offline, forever
-      ├─ ADR-002 …            ⑧  one phone: Snapdragon 8 Gen 2
-      ├─ ADR-003 …            ⑨  CPU now, NPU later
-      ├─ ADR-004 …            —  withdrawn (was the deferred tech-stack register)
-      ├─ ADR-005 …            ⑭  QNN conversion workarounds
-      ├─ ADR-006 …            ⑮  Android runner architecture
-      └─ ADR-029 …            ⑬  license gate
+├─ docs/
+│  ├─ contest-info.md         ②  the contest + how we're graded
+│  ├─ specifications.md       ③  our concrete targets + glossary
+│  ├─ onboarding.md           ⑥  this file — architecture, decoded
+│  ├─ onboarding-quiz.md      —  comprehension checkpoint
+│  ├─ decisions/              ⑪  public licensing records (ADR-029–031)
+│  └─ reference/
+│     └─ additional-reading.md  ⑫  the self-study syllabus
+├─ archive/                   —  the previous implementation, reference only
+└─ prototype/                 (submodule: kavi-prototype, PUBLIC benchmark)
+   ├─ README.md               ④  harness + how to run
+   ├─ CONTRIBUTING.md         ⑤  cloning + tooling
+   ├─ docs/benchmark/         —  the published v1 results + report
+   ├─ docs/reference/         ⑬  benchmarking plan, denoising gate, corpus catalog
+   └─ bench/                  —  the harness (candidates, scorer, data prep)
+
+kavi-android/                 (PRIVATE on-device track)
+├─ kavi-tuning.yaml           —  build + runtime tuning
+├─ docs/decisions/           ⑩  the ADR register (start at its README)
+│  ├─ ADR-001 …              ⑦  100% offline, forever
+│  ├─ ADR-002 …              ⑧  one phone: Snapdragon 8 Gen 2
+│  ├─ ADR-003 …              ⑨  CPU now, NPU later
+│  ├─ ADR-005 …              ⑭  QNN conversion workarounds
+│  └─ ADR-006 …              ⑮  Android runner architecture
+└─ docs/                     —  implementation plans, NDK/QAIRT runbook
 ```
 
 **What to conclude from each:**
 
-1. **Parent `README.md`** → the public landing page; the code is in the
-   `prototype/` submodule; public docs are just the contest brief + our spec.
-2. **`docs/reference/contest-info.md`** → Kavi is an entry to the **OneVoice AI Challenge**
+1. **This repo's `README.md`** → the public landing page; the story, the layout,
+   and the checks that keep the three repositories honest.
+2. **`docs/contest-info.md`** → Kavi is an entry to the **OneVoice AI Challenge**
    (Saigon AI Hub × Qualcomm, May–Nov 2026); an offline VI↔EN speech-to-speech
    translator; here are the contest rules + the six grading metrics.
 3. **`docs/specifications.md`** → our translated targets — offline, RTF < 1.0,
    turnaround < 2.0 s, BLEU/COMET both ways, TTS MOS, stability — plus a newcomer
    acronym glossary. This is the scoreboard "good" is measured against.
-4. **Submodule `README.md`** → the pipeline is **ASR → MT → TTS**, fully offline,
-   VI↔EN; repo layout + how to run.
-5. **Submodule `CONTRIBUTING.md`** (Cloning, Setup) → clone with
-   `--recurse-submodules`; a plain parent clone skips the submodule. Then
+4. **Submodule `README.md`** (`prototype/README.md`) → the host-side harness:
+   candidates, scorer, how to build the eval set and run it.
+5. **Submodule `CONTRIBUTING.md`** (`prototype/CONTRIBUTING.md`) → clone with
+   `--recurse-submodules`; a plain parent clone skips the benchmark. Then
    `make setup` for deps + pinned models/data. Tooling: ruff + commitlint +
    pre-commit.
 6. **`docs/onboarding.md`** (this file) → plain-language walkthrough of the three
    architecture decisions, so the ADRs below make sense without prior context.
-7. **`ADR-001` (offline-first)** → **zero cloud, ever.** A network call during
-   testing is an instant disqualification.
-8. **`ADR-002` (target platform)** → we optimize for **one device** — Snapdragon
-   8 Gen 2, Android 16, Hexagon HTP v73. Phone-only.
-9. **`ADR-003` (Hexagon runtime)** → start on **CPU (ORT-XNNPACK int8)** —
+7. **`ADR-001` (offline-first, private)** → **zero cloud, ever.** A network call
+   during testing is an instant disqualification.
+8. **`ADR-002` (target platform, private)** → we optimize for **one device** —
+   Snapdragon 8 Gen 2, Android 16, Hexagon HTP v73. Phone-only.
+9. **`ADR-003` (Hexagon runtime, private)** → start on **CPU (ORT-XNNPACK int8)** —
    license-clean, ships today; add **NPU / QAIRT later** after on-device
    benchmarks. NNAPI rejected.
-10. **`docs/decisions/README.md` (the ADR index)** → **one decision per record.**
-    Start here rather than reading ADRs in number order: it lists every record with
-    its status, the supersession graph, and the parameters still open. The tech-stack
-    choices are spread across records — ADR-007 (service) with ADR-013–022 (pipeline),
-    ADR-008 (Dual Zipformer ASR, CPU-only per ADR-027), ADR-009 (Supertonic Phase-1
-    TTS), ADR-010 (`ALL_OPT`). **ADR-004 is withdrawn** — it was the deferred
-    tech-stack register, which the index has replaced.
+10. **The ADR register** (private: `kavi-android/docs/decisions/README.md`) →
+    **one decision per record.** Start there rather than reading ADRs in number
+    order: it lists every record with its status, the supersession graph, and the
+    parameters still open. The tech-stack choices are spread across records —
+    ADR-007 (service) with ADR-013–022 (pipeline), ADR-008 (Dual Zipformer ASR,
+    CPU-only per ADR-027), ADR-009 (Supertonic Phase-1 TTS), ADR-010 (`ALL_OPT`).
+    **ADR-004 is withdrawn** — it was the deferred tech-stack register, which the
+    index has replaced. The on-device records are private because their mechanism
+    is; the public side keeps the claim it constrains.
 11. **`docs/decisions/ADR-029-license-gate.md`** → most candidates are license-clean;
     this gate is *why* we can pick safely. TTS licensing is **resolved for v1**
     (ADR-009: Supertonic); the **Piper GPL split** matters only if the fallback is
-    exercised — pin the MIT-era `rhasspy/piper` snapshot then.
-12. **`docs/reference/benchmarking-plan.md`** → we **benchmark before choosing** — datasets,
+    exercised — pin the MIT-era `rhasspy/piper` snapshot then. ADR-030 (QAIRT
+    redistribution) and ADR-031 (Piper GPL split) sit beside it: licensing is
+    program layer, so all three records are public here.
+12. **Submodule `docs/reference/benchmarking-plan.md`** → we **benchmark before choosing** — datasets,
     the ASR/MT/TTS candidate landscape, the pluggable harness design, the lean v0.
-13. **`docs/reference/benchmarking-todo.md`** → the **execution checklist** (phases 0–7,
+13. **Submodule `docs/reference/benchmarking-todo.md`** → the **execution checklist** (phases 0–7,
     checkboxes) to produce those numbers — what you'd actually pick up and work on.
-14. **`ADR-005` (QNN conversion workarounds)** → when the QAIRT converter rejected
-    ops (`IsNaN`, cyclic graphs), these are the workarounds: strip `IsNaN` from the
-    decoder (ADR-005), run decoders on CPU (ADR-023), keep TTS on CPU (ADR-024).
-15. **`ADR-006` (Android runner architecture)** → native on-device instrumented
+14. **`ADR-005` (QNN conversion workarounds, private)** → when the QAIRT converter
+    rejected ops (`IsNaN`, cyclic graphs), these are the workarounds: strip `IsNaN`
+    from the decoder (ADR-005), run decoders on CPU (ADR-023), keep TTS on CPU
+    (ADR-024).
+15. **`ADR-006` (Android runner architecture, private)** → native on-device instrumented
     test (no ADB bridge), single push/pull, internal timing, zero-network
     assertion; with the fixed-shape padding rule in ADR-025 and real-data-only
     calibration in ADR-026.
 
-> **Skip for now:** `archive/` (historical, superseded) and `docs/README.md`
-> (just an index).
+> **Skip for now:** `archive/` (historical, superseded) and
+> `prototype/docs/README.md` (the benchmark docs index).
 
 ## What Kavi is, in one breath
 
@@ -112,9 +125,10 @@ Everything between the microphone and the speaker happens on-device.
 
 ## The three decisions you must know
 
-These are the **Architecture Decision Records (ADRs)** in `docs/decisions/`.
-Read them as "here is what we locked in, and why." They are the backbone of
-everything else.
+These are the **Architecture Decision Records (ADRs)** in the private
+`kavi-android/docs/decisions/`. Read them as "here is what we locked in, and
+why." They are the backbone of everything else. The licensing trio
+(ADR-029–031) is public in this repo, under `docs/decisions/`.
 
 ### ADR-001 — Offline-first, on-device (Accepted)
 
@@ -167,7 +181,7 @@ QAIRT). **NNAPI is explicitly avoided** (deprecated in Android 15; we target
 | --- | --- | --- |
 | **S2ST / S2S** | Speech-to-speech translation | What Kavi *is*. |
 | **VI↔EN** | Vietnamese ↔ English | Our language pair (later ZH, KO). |
-| **ADR** | Architecture Decision Record | A written, durable "we chose X because Y". In `docs/decisions/` (ADR-001–006). |
+| **ADR** | Architecture Decision Record | A written, durable "we chose X because Y". In `kavi-android/docs/decisions/` (ADR-001–028) or `docs/decisions/` here (ADR-029–031, licensing). |
 | **SoC** | System-on-Chip | The whole phone computer on one chip (CPU + GPU + NPU). |
 | **NPU** | Neural Processing Unit | The chip's AI accelerator; far faster / power-efficient than CPU for models. |
 | **Hexagon** | Qualcomm's NPU brand | Our NPU. |
@@ -194,29 +208,30 @@ QAIRT). **NNAPI is explicitly avoided** (deprecated in Android 15; we target
 
 ## Repository layout — what lives where
 
-This repo is a **fresh scaffold**; the previous implementation is preserved
+This repo is the **program layer**; the previous implementation is preserved
 under `archive/` for reference.
 
 | Path | What it is |
 | --- | --- |
+| `docs/` | Public program docs — contest brief, specification, this guide, the quiz, the reading list. |
+| `docs/decisions/` | The public licensing records (`ADR-029`, `ADR-030`, `ADR-031`). |
 | `archive/` | The old implementation (old `pipeline.py`, `architecture.md`, `design.md`, legacy ADRs, experiments). **Reference only — do not edit.** |
-| `models/` | Checked-in model weights. Today: **Opus-MT vi-en** (CTranslate2 + SentencePiece) — our current MT. |
-| `voices/` | TTS voice model(s) (Piper). Usually gitignored / downloaded at runtime. |
-| `docs/` | Internal docs (this file's siblings). |
-| `docs/decisions/` | The ADRs — start at `README.md` (the index). Source of truth for architecture + licensing. |
-| `docs/android-implementation-plan.md` | The implementation plan, milestone view (M0–M6). **Read this next.** |
-| `docs/android-kotlin-cpp-implementation-plan.md` | The same plan at file level (Kotlin/C++ layout, JNI contract, Build A–F). |
-| `docs/ndk-conversion-runbook.md` | Runbook for the one remaining QNN artifact (Opus-MT encoder → HTP v73). |
-| `docs/reference/` | Superseded / deprecated docs (benchmarking-plan, phase-4-qnn-plan, …). |
-| `AGENTS.md`, `CONTRIBUTING.md`, `README.md` | Project / agent guidance, how we work, quickstart. |
-| `Makefile`, `pyproject.toml`, `LICENSE` | Build / run, deps (uv), MIT license. |
-| `.github/` | CI (lint + changelog) and PR / issue templates. |
+| `prototype/` | Git submodule: `kavi-prototype`, the public host-side benchmark — harness, eval sets, `docs/benchmark/` results and the Typst report. |
+| `scripts/`, `tests/` | The public-boundary and Markdown-link checks, plus their unit tests. |
+| `.github/` | CI for those checks, and `CODEOWNERS`. |
+
+Two things are **not** here, by design:
+
+- **The on-device app** — private, in `kavi-android`: app code, `kavi-tuning.yaml`,
+  the on-device ADR register (ADR-001–028), the QAIRT/NDK conversion toolchain.
+- **The harness itself** — public, in the `prototype/` submodule: `bench/`,
+  `docs/benchmark/`, eval-set preparation, the model and dataset pins.
 
 ## The model-licensing rule (contest-critical)
 
 The contest can lead to **commercialization**, so every model must permit
 commercial use. This single rule eliminates several otherwise-attractive models.
-Full detail is in `docs/reference/benchmarking-plan.md` §4.4–§4.5.
+Full detail is in `prototype/docs/reference/benchmarking-plan.md` §4.4–§4.5.
 
 - **Commercial-clean (use these):** Opus-MT (Apache-2.0), MeloTTS (MIT),
   MADLAD-400 (Apache-2.0), M2M-100 (MIT), Kokoro (Apache-2.0),
@@ -224,7 +239,7 @@ Full detail is in `docs/reference/benchmarking-plan.md` §4.4–§4.5.
 - **TTS — resolved for v1 (ADR-009):** Supertonic Phase 1 → VieNeu-TTS Phase 2,
   via sherpa-onnx; Piper VITS is fallback only. The old MIT/GPL fork question
   matters only if the fallback is exercised (pin the MIT-era `rhasspy/piper`
-  snapshot then). See `docs/reference/benchmarking-plan.md` §4.5 for the landscape.
+  snapshot then). See `prototype/docs/reference/benchmarking-plan.md` §4.5 for the landscape.
 - **Avoid (license blocks):** **NLLB** (CC-BY-NC), **MMS-TTS-vie** (CC-BY-NC),
   **Coqui XTTS** (CPML — restrictive; Coqui Inc. shut down Jan 2024).
 - **Caution (verify):** **Hy-MT** (HY Community License — commercial-permitted
@@ -236,8 +251,10 @@ The **tech stack is decided** across several records: ADR-007 (service) with
 ADR-013–022 (pipeline), ADR-008 (Dual Zipformer ASR, CPU-only per ADR-027),
 ADR-009 (Supertonic Phase-1 TTS), ADR-010 (`ALL_OPT`). **ADR-004 is withdrawn** —
 the parameter table it maintained is now the
-[open-parameters register](decisions/README.md#open-parameters), which closes as
-the Phase-4/5/7 on-device numbers and hard gates land (see `.pi/PLAN.md` §8).
+[open-parameters register](../prototype/docs/decisions/README.md#open-parameters),
+which closes as the Phase-4/5/7 on-device numbers and hard gates land. The
+register is public; the on-device records it tracks are private, and the public
+side keeps the claim each one constrains.
 
 ## How to get running & next steps
 
@@ -248,18 +265,21 @@ the Phase-4/5/7 on-device numbers and hard gates land (see `.pi/PLAN.md` §8).
    cd aivoice-2026/prototype && git checkout main
    ```
 
-2. **Bootstrap & check** (`make setup` fetches the pinned model weights and
-   FLEURS data; `make setup-min` is the offline path):
+2. **Bootstrap & check** — the harness commands run inside the submodule
+   (`make setup` fetches the pinned model weights and FLEURS data; `make setup-min`
+   is the offline path):
 
    ```bash
+   cd prototype
    make setup
    make check
    make test
    ```
 
-3. **Read in order** — see **Start here** (top of this guide): parent
+3. **Read in order** — see **Start here** (top of this guide): this repo's
    `README.md` → `contest-info.md` → `specifications.md`, then the submodule docs
-   (`README.md` → this guide → `reference/benchmarking-plan.md` → `docs/decisions/*`).
+   (`README.md` → `docs/reference/benchmarking-plan.md`). The on-device records are
+   private; ask for access before relying on them.
 4. **The v0 harness is built** (`bench/`) — build the eval set and run it:
 
    ```bash
@@ -269,7 +289,7 @@ the Phase-4/5/7 on-device numbers and hard gates land (see `.pi/PLAN.md` §8).
    make test         # run the pytest suite
    ```
 
-   Feed the numbers into the [open-parameters register](decisions/README.md#open-parameters).
+   Feed the numbers into the [open-parameters register](../prototype/docs/decisions/README.md#open-parameters).
 
 > **If you remember nothing else:** Kavi is a fully-offline phone translator
 > (VI↔EN); we target **one chip** (Snapdragon 8 Gen 2 / Hexagon HTP v73); the

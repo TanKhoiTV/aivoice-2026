@@ -17,11 +17,15 @@ submodule ([`kavi-prototype`](https://github.com/TanKhoiTV/kavi-prototype)).
 
 ## Documentation
 
-Public project documentation (contest rules, specifications) lives in
-[`docs/`](docs/):
+Public project documentation lives in [`docs/`](docs/):
 
 - [OneVoice AI Challenge — Contest Information](docs/contest-info.md)
 - [Technical Specifications & Grading](docs/specifications.md)
+- [Onboarding](docs/onboarding.md) — the project decoded, plus
+  [the comprehension quiz](docs/onboarding-quiz.md) and the
+  [self-study syllabus](docs/reference/additional-reading.md)
+- [Decision records](docs/decisions/README.md) — the public licensing register
+  (ADR-029–031); the on-device records are private
 
 ## Repository checks
 
@@ -66,6 +70,9 @@ git submodule update --init
 
 | Path | What it is |
 | ------ | ------------ |
-| `docs/` | Public-facing project documentation (contest, specs) |
-| `prototype/` | The actual implementation (code + internal docs) — a git submodule |
+| `docs/` | Public-facing project documentation (contest, specs, onboarding) |
+| `docs/decisions/` | The public licensing records — ADR-029, ADR-030, ADR-031 |
+| `archive/` | The previous implementation, kept verbatim for history — reference only |
+| `prototype/` | The benchmark (harness + published results) — a git submodule |
+| `scripts/`, `tests/` | The public-boundary and Markdown-link checks, with their unit tests |
 | `.gitmodules` | Submodule definition |

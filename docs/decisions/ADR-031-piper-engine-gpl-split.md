@@ -27,8 +27,8 @@ all, and under what isolation.
 
 This fork **shapes all of TTS**, so leaving it undecided is the main route to a
 late TTS swap. Note that Piper is no longer the v1 default — see
-[ADR-009](ADR-009-supertonic-tts-v1.md) and
-[ADR-024](ADR-024-piper-tts-on-cpu.md) — which lowers the stakes but does not
+ADR-009 (v1 TTS: Supertonic — private in `kavi-android`) and
+ADR-024 (Piper TTS on CPU — private in `kavi-android`) — which lowers the stakes but does not
 remove the fork, since Piper remains the documented fallback.
 
 > **Split note (2026-09-25):** extracted from `license-situation.md` (now
@@ -59,7 +59,7 @@ entirely in favour of the v1 default.
 ### Positive
 
 - Deferring costs nothing today: Piper is not the v1 default
-  ([ADR-009](ADR-009-supertonic-tts-v1.md)).
+  (ADR-009 (v1 TTS: Supertonic — private in `kavi-android`)).
 
 ### Negative / risk
 
@@ -73,6 +73,6 @@ entirely in favour of the v1 default.
 ## References
 
 - [ADR-029](ADR-029-license-gate.md) — Shipping license gate (parent record)
-- [ADR-009](ADR-009-supertonic-tts-v1.md) — v1 TTS: SupertonicTTS 3 (current default)
-- [ADR-024](ADR-024-piper-tts-on-cpu.md) — Piper TTS stays on CPU (conversion position)
+- ADR-009 (v1 TTS: Supertonic — private in `kavi-android`) — v1 TTS: SupertonicTTS 3 (current default)
+- ADR-024 (Piper TTS on CPU — private in `kavi-android`) — Piper TTS stays on CPU (conversion position)
 - `docs/reference/phase-4-qnn-plan.md` §3.3 — Piper conversion, deferred

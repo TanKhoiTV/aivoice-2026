@@ -23,7 +23,7 @@
 
 - [Android Developer Guide: Services](https://developer.android.com/guide/components/services) — start here, especially the Foreground Service section.
 - [Android Processes and Threads Overview](https://developer.android.com/guide/components/processes-and-threads) — the process-lifecycle table is worth memorising.
-- **In our codebase:** `app/src/main/java/com/kavi/app/service/TranslationService.kt` — trace `onCreate()` → model loading → `onBind()` → `startCommand()`.
+- **In our codebase (private `kavi-android`):** `app/src/main/java/com/kavi/app/service/TranslationService.kt` — trace `onCreate()` → model loading → `onBind()` → `startCommand()`.
 
 **You're done when:** You can explain why a foreground service is preferred over a WorkManager task for real-time audio processing, and you can find where in `TranslationService` the pipeline stages are wired together.
 
@@ -44,7 +44,7 @@
 
 - [ONNX Runtime Android Java API Reference](https://onnxruntime.ai/docs/api/java/) — read the `OrtSession.run()` and `OnnxTensor` pages, skip the training API.
 - [ORT Android sample app](https://github.com/microsoft/onnxruntime-inference-examples/tree/main/java/android) — the simplest end-to-end example. The sample runs a single model; Kavi's innovation is chaining multiple sessions with KV cache reuse.
-- **In our codebase:** `app/src/main/java/com/kavi/app/inference/` — the `Orchestrator` class that creates sessions and dispatches inference.
+- **In our codebase (private `kavi-android`):** `app/src/main/java/com/kavi/app/inference/` — the `Orchestrator` class that creates sessions and dispatches inference.
 
 **You're done when:** You can load any ONNX model, feed it a tensor, and read the output from Kotlin without looking at a reference.
 
@@ -65,7 +65,7 @@
 
 - [OpenAI Whisper blog post](https://cdn.openai.com/papers/whisper.pdf) — the paper. Read the architecture section (Figure 1, §2.2) and the tokenizer section (§2.4). Skip the training data and multilingual benchmarks.
 - [faster-whisper](https://github.com/SYSTRAN/faster-whisper) — CTranslate2-based CPU optimisation of the same architecture. By contrast, Kavi's decoder runs through ONNX Runtime's Java API — a design choice that avoids hand-rolling per-step native code (the argument for ADR-007's Path B over Paths A/C).
-- **In our codebase:** `bench/candidates/whisper_asr.py` for the Python reference; `app/src/main/java/com/kavi/app/inference/decoder/WhisperDecoder.kt` for the Android side.
+- **In our codebase:** the Python candidate in the `prototype/` submodule (`bench/candidates/whisper_asr.py`) and the Android side in the private `kavi-android` repo (`app/src/main/java/com/kavi/app/inference/decoder/WhisperDecoder.kt`).
 
 **You're done when:** You can explain why the encoder runs once and the decoder runs N times (where N = utterance length in tokens), and what "KV cache" means in terms of tensors flowing through the decoder loop.
 
@@ -85,7 +85,7 @@
 
 - [Helsinki-NLP Opus-MT](https://huggingface.co/Helsinki-NLP) — the model family page. The vi-en model is `Helsinki-NLP/opus-mt-vi-en`.
 - [SentencePiece GitHub](https://github.com/google/sentencepiece) — read the README to understand the unigram language-model tokeniser. You don't need to build it; just understand that it works on raw text without a pre-tokeniser (unlike BPE which runs on whitespace-split words).
-- **In our codebase:** `bench/candidates/opusmt_mt.py` for the Python CTranslate2 reference; `models/opus-mt-vi-en-ct2/model.bin` for the on-disk int8 weights.
+- **In our codebase:** the Python CTranslate2 reference is `bench/candidates/opusmt_mt.py` in the `prototype/` submodule; the on-disk int8 weights are fetched by `make models` there, not committed.
 
 **You're done when:** You can explain the structural difference between Whisper's byte-level BPE and Opus-MT's SentencePiece tokenizer, and why that difference matters for the detokenizer on the CPU side.
 
@@ -106,7 +106,7 @@
 
 - [Qualcomm AI Hub Documentation](https://aihub.qualcomm.com/docs/) — start with the "Deploy on Device" section to understand the workflow. You don't need to run it; just understand the QNN→ONNX→context-binary pipeline.
 - [Snapdragon Neural Processing Engine SDK Overview](https://developer.qualcomm.com/sites/default/files/docs/snpe/overview.html) — the predecessor to QAIRT. The concepts (DLC files instead of context binaries, ION buffers, HTP loading) are the same.
-- **In our codebase:** `docs/decisions/ADR-005-qnn-isnan-workaround.md` for the concrete conversion-failure story; `models/qnn/` for the actual context binaries.
+- **In our codebase:** ADR-005 — QNN conversion workarounds (private, `kavi-android`) for the concrete conversion-failure story; the context binaries are private build artifacts.
 
 **You're done when:** You can draw the data flow from PCM audio → NPU encoder context binary → ION buffer → CPU decoder session, and explain why the QAIRT version matters for the `jniLibs` roster.
 
@@ -128,7 +128,7 @@
 
 - [Silero VAD](https://github.com/snakers4/silero-vad) — the industry-standard lightweight model-based VAD. The README has a good explanation of why energy VAD fails in noisy conditions. Kavi reserves a slot for a model like this in Phase-2.
 - [AudioRecord API reference](https://developer.android.com/reference/android/media/AudioRecord) — read `read(float[], int, int)` and the `ENCODING_PCM_FLOAT` note. Understand the difference between `MODE_STATIC` and `MODE_STREAM`.
-- **In our codebase:** `app/src/main/java/com/kavi/app/audio/Recorder.kt` — the circular buffer and VAD gate; `app/src/main/java/com/kavi/app/audio/Denoiser.kt` — the GTCRN wrapper.
+- **In our codebase (private `kavi-android`):** `app/src/main/java/com/kavi/app/audio/Recorder.kt` — the circular buffer and VAD gate; `app/src/main/java/com/kavi/app/audio/Denoiser.kt` — the GTCRN wrapper.
 
 **You're done when:** You can explain why a 15-threshold margin and a 1300 ms pre-roll exist, and why the threshold constant needs rescaling between PCM16 and PCM float.
 
@@ -149,7 +149,7 @@
 
 - [Android BLE Overview](https://developer.android.com/develop/connectivity/bluetooth/ble/ble-overview) — start with the GATT architecture page. Understand services, characteristics, descriptors, and the difference between `onCharacteristicWrite` and `onCharacteristicChanged` (notification).
 - [Android BLE Scanning](https://developer.android.com/develop/connectivity/bluetooth/ble/scan) — for the PeerToPeer discovery flow.
-- **In our codebase:** `app/src/main/java/com/kavi/app/ble/` — the BLE communicator layer (to be designed; currently placeholder). RTranslator is the closest reference: `RTranslator/app/src/main/java/nie/translator/rtranslator/bluetooth/BluetoothCommunicator.java`.
+- **In our codebase (private `kavi-android`):** `app/src/main/java/com/kavi/app/ble/` — the BLE communicator layer (to be designed; currently placeholder). RTranslator is the closest reference: `RTranslator/app/src/main/java/nie/translator/rtranslator/bluetooth/BluetoothCommunicator.java`.
 
 **You're done when:** You can describe the GATT server/client setup for a symmetric two-device conversation and explain why MTU negotiation matters.
 
@@ -159,9 +159,9 @@
 
 Once you've covered the sections above (even just skimming the last few), read the following in order:
 
-1. **ADR-007** (`docs/decisions/ADR-007-translation-service.md`) — all 11 decisions. You now have the vocabulary for every term in the document.
-2. **ADR-007 vs RTranslator comparison** (`docs/reference/rtranslator-comparison.md`) — the dimension-by-dimension comparison reinforces each concept and shows where Kavi's design differs from a real shipping product.
-3. **ADR-005** (`docs/decisions/ADR-005-qnn-isnan-workaround.md`) — the concrete story of why the decoder stayed on CPU and how that shapes the NPU/CPU boundary.
-4. **The code itself:** Start with `TranslationService.kt`, trace one utterance end-to-end, then drill into the component you're assigned to.
+1. **ADR-007 — translation service** (private, `kavi-android`) — all 11 decisions. You now have the vocabulary for every term in the document.
+2. **ADR-007 vs RTranslator comparison** (private, `kavi-android`) — the dimension-by-dimension comparison reinforces each concept and shows where Kavi's design differs from a real shipping product.
+3. **ADR-005 — QNN conversion workarounds** (private, `kavi-android`) — the concrete story of why the decoder stayed on CPU and how that shapes the NPU/CPU boundary.
+4. **The code itself** (private `kavi-android`): start with `TranslationService.kt`, trace one utterance end-to-end, then drill into the component you're assigned to.
 
 **You're ready to contribute when:** You can look at any table row or code comment in the Kavi codebase and identify which ADR decision it implements, which model it touches, and whether the compute goes through ONNX Runtime or QNN.

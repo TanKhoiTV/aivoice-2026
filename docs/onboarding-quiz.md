@@ -4,7 +4,7 @@
 > licensing, and benchmarking state — not trivia, but which decisions are *locked*
 > vs *deferred*, and the hard constraints that disqualify options.
 > Answer key + rubric in **Appendix A**. Pair with `onboarding.md` (Start here)
-> and the ADRs in `docs/decisions/`.
+> and the ADRs in the private `kavi-android` repo (`docs/decisions/`).
 >
 > ~30–45 min. Mix of short-answer, scenario, and classification.
 
@@ -16,7 +16,7 @@ the contest can lead to **commercialization**. A teammate proposes swapping our 
 to **NLLB-200-distilled-600M** because it scores highest on FLORES-200. What is
 wrong with this proposal, and what would you suggest instead?
 
-**Q2 — Classification (decided vs deferred vs open).** *Source: ADR-001/002/003, ADR-029, `decisions/README.md`.*
+**Q2 — Classification (decided vs deferred vs open).** *Source: ADR-001/002/003, ADR-029, the ADR register in `kavi-android`.*
 Classify each as **DECIDED**, **DEFERRED**, or **OPEN**:
 (a) Kavi runs fully offline · (b) target device is Snapdragon 8 Gen 2 · (c) the
 NPU runtime is QAIRT/QNN · (d) the exact ASR model · (e) Hy-MT is commercially
