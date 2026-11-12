@@ -14,11 +14,11 @@ The project's decisions are split by what each one constrains, not by where it h
 
 | # | Title | Status |
 | --- | --- | --- |
-| [ADR-029](ADR-029-license-gate.md) | Shipping license gate — adopt/avoid verdicts | **Accepted** — gate in force; one policy fork open (ADR-031) |
+| [ADR-029](ADR-029-license-gate.md) | Shipping license gate — adopt/avoid verdicts | **Accepted** — gate in force; its policy fork (ADR-031) is now closed as moot |
 | [ADR-030](ADR-030-qairt-runtime-redistribution.md) | QAIRT runtime redistribution is permitted | **Accepted** — resolved 2026-07-19 |
-| [ADR-031](ADR-031-piper-engine-gpl-split.md) | Piper engine GPL split | **Proposed** — deferred, not decided |
+| [ADR-031](ADR-031-piper-engine-gpl-split.md) | Piper engine GPL split | **Superseded** 2026-11-12 — moot: Piper is not shipped, on frontend and functional grounds |
 
-ADR-029 is the parent record: it decides *which candidates may ship at all*, and ADR-030/031 resolve two of the forks it left open.
+ADR-029 is the parent record: it decides *which candidates may ship at all*, and ADR-030/031 resolve two of the forks it left open. ADR-031 is closed as moot rather than decided — see its own "How it closed" section.
 
 ## Where the rest went
 
