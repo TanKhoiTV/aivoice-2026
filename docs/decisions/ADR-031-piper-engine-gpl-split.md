@@ -1,8 +1,10 @@
-# ADR-031: Piper engine GPL split (open)
+# ADR-031: Piper engine GPL split (closed — moot)
 
 ## Status
 
-Proposed — **deferred**, not decided
+**Superseded 2026-11-12 — the fork is moot, because Piper is not shipped.**
+
+Was: Proposed — **deferred**, not decided.
 
 ## Date
 
@@ -54,6 +56,30 @@ A decision on whether the subprocess-isolation pattern is adopted as the
 supported Piper path, or whether Piper is dropped from the shipped stack
 entirely in favour of the v1 default.
 
+### How it closed — 2026-11-12
+
+Neither branch of the fork was taken, because **Piper left the shipped stack on functional and
+frontend grounds, not on the licence split**. Recorded in `kavi-android`:
+
+- **The frontend was removed upstream.** sherpa-onnx 2.0.1 dropped espeak-ng and `piper-phonemize`
+  (k2-fsa/sherpa-onnx#4055, 2026-10-20). A piper model now refuses text outright: *"No frontend
+  available. For piper/icefall/inflect/coqui models, provide phoneme_codepoints via
+  GenerationConfig at generate time"*. Supplying them means phonemising outside sherpa — and
+  `piper-phonemize` is **GPL-3.0**, which is the same copyleft this record was trying to isolate,
+  now moved to the *input* side where subprocess isolation does not help.
+- **The MIT-era voice does not work.** The staged build loads and then synthesises zero-length audio,
+  and the staged `espeak-ng-data` carries no usable `vi` voice.
+- **Two engines ship instead**: Supertonic 3 for VI→EN (OpenRAIL-M weights + MIT code) and VieNeu v3
+  Turbo for EN→VI (MIT), per ADR-009 and ADR-028.
+
+So: subprocess isolation is **not adopted**, and **neither Piper build is shipped**. The underlying
+policy question is answered by default — but by events, not by a verdict. If Piper ever returns with a
+licence-clean frontend, this fork reopens with the isolation question intact rather than settled.
+
+Sources, all in `kavi-android`: `docs/reference/tts-engines.md` (frontend removal, zero-length audio,
+licence audit of the candidate set), `docs/reference/backlog.md` item 38 ("the Piper fallback: a bug,
+and then a broken asset"), `ADR-009`, `ADR-028`.
+
 ## Consequences
 
 ### Positive
@@ -63,8 +89,8 @@ entirely in favour of the v1 default.
 
 ### Negative / risk
 
-- **An open policy fork can force a late TTS swap** if resolved against the
-  current picks ([ADR-029](ADR-029-license-gate.md)).
+- **The question remains unanswered in principle.** Piper is out because it cannot run, not because the
+  isolation pattern was evaluated and rejected. A future re-adoption starts from the same fork.
 - The MIT-era upstream is archived, so the clean option is frozen: it will not
   receive fixes.
 - Subprocess isolation is an architectural commitment (IPC boundary, lifecycle),
